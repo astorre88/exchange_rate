@@ -1,24 +1,13 @@
-# README
+# Nmax
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[![Build Status](https://api.travis-ci.org/astorre88/nmax.svg?branch=master)](https://travis-ci.org/astorre88/nmax)
 
-Things you may want to cover:
+The library for number parsing in a text.
 
-* Ruby version
+## Installation
 
-* System dependencies
+    $ rails db:setup
 
-* Configuration
+And then execute:
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+    $ foreman start
