@@ -1,8 +1,6 @@
-# Nmax
+# ExchangeRate
 
-[![Build Status](https://api.travis-ci.org/astorre88/nmax.svg?branch=master)](https://travis-ci.org/astorre88/nmax)
-
-The library for number parsing in a text.
+USD/RUB exchange rate management application.
 
 ## Installation
 
