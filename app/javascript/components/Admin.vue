@@ -1,6 +1,12 @@
 <template>
   <div>
-    <b-form inline>
+    <p v-if="errors.length">
+      <b>Errors:</b>
+      <ul>
+        <li :key="error" v-for="error in errors">{{ error }}</li>
+      </ul>
+    </p>
+    <b-form @submit="saveRate" inline>
       <b-form-input
         v-model="form.rate"
         type="number"
@@ -18,7 +24,7 @@
         locale="en"
       ></b-form-timepicker>
 
-      <b-button variant="primary">Save</b-button>
+      <b-button type="submit" variant="primary">Save</b-button>
     </b-form>
   </div>
 </template>
@@ -29,6 +35,7 @@ import { HTTP } from "../utils/http-common.js";
 export default {
   data() {
     return {
+      errors: [],
       form: {
         rate: "",
         date: "",
@@ -36,15 +43,43 @@ export default {
       }
     };
   },
-  mounted() {
-    HTTP.get("rate.json").then(response => {
-      const date_time = response.data.until_time.split("T");
+  methods: {
+    saveRate(evt) {
+      this.errors = [];
+
+      if (!this.form.rate) {
+        this.errors.push('Enter rate');
+      }
+      if (!this.form.date) {
+        this.errors.push('Enter date');
+      }
+      if (!this.form.time) {
+        this.errors.push('Enter time');
+      }
+
+      if (!this.errors.length) {
+        HTTP.post("rate.json", this.form)
+          .then(response => this.parseResponse(response.data))
+          .catch(error => console.log(error));
+      }
+
+      evt.preventDefault();
+    },
+    parseResponse(data) {
+      const date_time = data.until_time.split("T");
       this.form = {
-        rate: response.data.value,
+        rate: data.value,
         date: date_time[0],
         time: date_time[1]
       };
-    });
+    }
+  },
+  mounted() {
+    HTTP.get("show_admin.json")
+        .then(response => {
+          this.parseResponse(response.data)
+        })
+        .catch(error => console.log(error));
   }
 };
 </script>
