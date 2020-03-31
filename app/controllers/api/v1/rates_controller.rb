@@ -19,6 +19,6 @@ class Api::V1::RatesController < ApplicationController
   private
 
   def rate_params
-    params.permit(:rate, :date, :time)
+    params.permit(:rate, :date, :time, :format)
   end
 end

@@ -21,7 +21,7 @@
       <b-form-timepicker
         v-model="form.time"
         class="mb-2 mr-sm-2 mb-sm-0"
-        locale="en"
+        local="ru"
       ></b-form-timepicker>
 
       <b-button type="submit" variant="primary">Save</b-button>
@@ -31,6 +31,7 @@
 
 <script type="text/javascript">
 import { HTTP } from "../utils/http-common.js";
+import { mutations } from "../packs/store.js";
 
 export default {
   data() {
@@ -44,6 +45,7 @@ export default {
     };
   },
   methods: {
+    ...mutations,
     saveRate(evt) {
       this.errors = [];
 
@@ -59,7 +61,7 @@ export default {
 
       if (!this.errors.length) {
         HTTP.post("rate.json", this.form)
-          .then(response => this.parseResponse(response.data))
+          .then(response => this.setRate(response.data.value))
           .catch(error => console.log(error));
       }
 
@@ -70,15 +72,13 @@ export default {
       this.form = {
         rate: data.value,
         date: date_time[0],
-        time: date_time[1]
+        time: date_time[1].split('.')[0]
       };
     }
   },
   mounted() {
     HTTP.get("show_admin.json")
-        .then(response => {
-          this.parseResponse(response.data)
-        })
+        .then(response => this.parseResponse(response.data))
         .catch(error => console.log(error));
   }
 };

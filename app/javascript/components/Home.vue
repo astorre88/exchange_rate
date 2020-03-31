@@ -3,17 +3,20 @@
 </template>
 
 <script type="text/javascript">
-import { HTTP } from "../utils/http-common.js";
+import { getters, actions } from "../packs/store.js";
 
 export default {
-  name: "home",
   data() {
-    return {
-      rate: null
-    };
+    return {};
+  },
+  computed: {
+    ...getters
+  },
+  methods: {
+    ...actions
   },
   mounted() {
-    HTTP.get("rate.json").then(response => (this.rate = response.data.value));
+    this.fetchRateFromApi("rate.json");
   }
 };
 </script>
