@@ -62,7 +62,7 @@ export default {
       if (!this.errors.length) {
         HTTP.post("rate.json", this.form)
           .then(response => this.setRate(response.data.value))
-          .catch(error => console.log(error));
+          .catch(error => this.errors = error.response.data.errors);
       }
 
       evt.preventDefault();

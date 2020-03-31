@@ -12,7 +12,13 @@ class Api::V1::RatesController < ApplicationController
   end
 
   def create
-    rate = Rate.create(value: rate_params[:rate], until_time: "#{rate_params[:date]}T#{rate_params[:time]}", manual: true)
+    rate = Rate::Create.call(rate_params.to_h.update(manual: true))
+    if rate.invalid?
+      return render(json: { errors: rate.errors.full_messages }, status: :bad_request)
+    end
+
+    ActionCable.server.broadcast 'rate_channel', content: rate
+
     render json: rate
   end
 
