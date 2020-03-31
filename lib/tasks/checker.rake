@@ -11,7 +11,8 @@ namespace :rate do
 
     loop do
       if Rate.where(manual: true).last.until_time < Time.current
-        Rate::Check.call
+        rate = Rate::Check.call
+        ActionCable.server.broadcast 'rate_channel', content: rate
       end
       sleep TIME_STEP
     end

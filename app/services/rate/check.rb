@@ -9,8 +9,7 @@ class Rate::Check < BaseService
   def call
     res = JSON.parse(request).dig(*RATE_VALUE_PATH)
     Rails.logger.info("USD/RUB rate: #{res}")
-    rate = Rate.create(value: res, until_time: Time.current)
-    ActionCable.server.broadcast 'rate_channel', content: rate
+    Rate.create(value: res, until_time: Time.current)
   end
 
   private
