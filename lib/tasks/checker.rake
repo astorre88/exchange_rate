@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :rate do
   desc 'Rate check task'
   task check: :environment do

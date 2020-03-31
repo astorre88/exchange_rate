@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   namespace :api, constraints: { format: 'json' } do
     namespace :v1 do
-      resource :rate, only: [:show, :create]
+      resource :rate, only: %i[show create]
       get '/show_admin', action: :show_admin, controller: 'rates'
     end
   end

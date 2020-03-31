@@ -10,6 +10,6 @@ consumer.subscriptions.create("RateChannel", {
   },
 
   received(data) {
-    console.log(data.content)
+    console.log(data.content);
   }
 });
