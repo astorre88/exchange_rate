@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Rate::Choose < BaseService
   def call
     actual_manual_rate = Rate.where(manual: true).last

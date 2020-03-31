@@ -3,7 +3,7 @@
 </template>
 
 <script type="text/javascript">
-import { getters, actions } from "../packs/store.js";
+import { getters, mutations, actions } from "../packs/store.js";
 
 export default {
   data() {
@@ -12,11 +12,23 @@ export default {
   computed: {
     ...getters
   },
+  channels: {
+    RateChannel: {
+      connected() {},
+      received(data) {
+        this.setRate(data.content.value);
+      }
+    }
+  },
   methods: {
+    ...mutations,
     ...actions
   },
   mounted() {
     this.fetchRateFromApi("rate.json");
+    this.$cable.subscribe({
+      channel: "RateChannel"
+    });
   }
 };
 </script>

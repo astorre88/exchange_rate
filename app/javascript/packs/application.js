@@ -9,6 +9,7 @@ require("@rails/activestorage").start();
 require("channels");
 
 import Vue from "vue";
+import ActionCableVue from 'actioncable-vue';
 import {
   BootstrapVue,
   IconsPlugin
@@ -18,8 +19,15 @@ import App from "../components/App";
 import Home from "../components/Home";
 import Admin from "../components/Admin";
 
-Vue.use(BootstrapVue)
-Vue.use(IconsPlugin)
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
+
+Vue.use(ActionCableVue, {
+  debug: true,
+  debugLevel: 'error',
+  connectionUrl: 'ws://localhost:3000/cable'
+});
+
 Vue.use(VueRouter);
 const router = new VueRouter({
   mode: "history",
